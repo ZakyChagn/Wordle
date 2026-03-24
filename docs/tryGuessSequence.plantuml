@@ -1,0 +1,13 @@
+@startuml TryGuess
+Player -> Game: Send word
+loop last letter
+    Game -> Game: Verify letter
+    Game -> Game: Update letter state
+end
+alt All letter Match
+Game -> Player: Guess successfull
+else Some letter don't Match
+Game -> Player: Guess unsuccessfull
+end
+
+@enduml

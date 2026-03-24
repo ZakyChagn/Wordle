@@ -1,0 +1,37 @@
+@startuml Wordle
+class Word{
+    Letter[5] letters
+}
+
+class Letter{
+    string symbol
+    State state
+}
+
+class Game{
+    Player player
+    List<Word> wordList
+    Word WordToGuess
+    Word[26] lettersList
+}
+
+class Guess{
+    Word word
+}
+
+class Player{
+    Guess[6]
+}
+
+
+Word "1" o-- "5" Letter
+
+Player "1" *-- "6" Guess
+
+Game "1" o-- "1" Player
+Game "1" o-- "*" Word
+
+Guess "1" o-- "1" Word
+
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+
+start
+
+if (Start game) then (yes)
+    repeat
+    repeat
+        :Select letter;
+    repeat while (guess.lenght != 5)
+        
+        :Try guess;
+    repeat while (Correct word not found)
+else (no)
+  :Quit;
+endif
+
+stop
+
+@enduml

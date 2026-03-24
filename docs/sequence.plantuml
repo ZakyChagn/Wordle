@@ -1,0 +1,11 @@
+@startuml InGameLogic
+loop Word not found
+loop 5 times
+Player -> Game: Select letter
+end
+Player -> Game: Try guess
+end
+Game --> Player: Word guessed successful
+
+
+@enduml
