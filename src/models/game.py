@@ -4,6 +4,7 @@ from .word import Word
 import json
 import random
 import string
+import os
 
 
 class Game():
@@ -12,7 +13,12 @@ class Game():
         self.words = []
         self.letters = [Letter(c) for c in string.ascii_lowercase]
         self.wordToGuess = None
-        with open("../wordles.json", "r", encoding="utf-8") as f:
+
+        # Get the directory where the current script is located
+        script_dir = os.path.dirname(__file__)
+        # Construct the path to the JSON file in the parent directory
+        json_path = os.path.join(script_dir, '../..', 'wordles.json')
+        with open(json_path, "r", encoding="utf-8") as f:
             self.words = json.load(f)
 
     def getNumberOfWords(self):
