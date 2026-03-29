@@ -40,7 +40,6 @@ class Game():
         self.wordToGuess = self.pickRandomWord()
         self.numberOfGuessLeft = MAX_TRIES
         self.gameState = GameState.InProgress
-        self.player.reset()
         for letter in self.letters:
             self.letters[letter].reset()
 
