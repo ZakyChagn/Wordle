@@ -1,4 +1,3 @@
-from .player import Player
 from .letter import Letter, LetterState
 from .word import Word
 import json
@@ -6,7 +5,6 @@ import random
 import string
 import os
 from enum import Enum
-
 
 MAX_TRIES = 6
 
@@ -17,7 +15,6 @@ class GameState(Enum):
 
 class Game():
     def __init__(self):
-        self.player = Player()
         self.words = []
         self.letters = { c:Letter(c) for c in string.ascii_lowercase}
         self.wordToGuess = None
@@ -87,7 +84,6 @@ class Game():
                     isLetterInWord = True
                     indexToRemove = i
                     break
-                    
 
             if (isLetterInWord):
                 indexLeftWord.remove(indexToRemove)
@@ -95,8 +91,6 @@ class Game():
                 self.changeLetterState(letterInstance, LetterState.Invalid)
 
             returnValues.append(letterInstance)
-            
-            
             index += 1
 
         self.numberOfGuessLeft -= 1

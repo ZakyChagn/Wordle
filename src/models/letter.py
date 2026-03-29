@@ -13,6 +13,7 @@ class Letter:
     def __init__(self, symbol):
         self.symbol = symbol
         self.state = LetterState.Unknown
+        
     def __eq__(self, value):
         if (self.symbol == value):
             return True
