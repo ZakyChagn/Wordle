@@ -3,24 +3,31 @@ Clone du jeu Wordle
 
 ### Setup
 1. In root project, create virtual environment 
-``` Python
+```
 python3 -m venv <env_name>
 ```
 Or
-``` Python
+```
 virtualenv <env_name>
 ```
 2. Activate environment 
-``` Python
+
+Linux
+``` 
 source <env_name>/bin/activate
 ```
+Windows
+```
+.\<env_name>\Scripts\activate
+```
+
 3. Install the dependencies
-``` Python
+```
 pip install -r requirements.txt
 ```
 
 ### Run the game
 
-``` Python
-python3 src/main.py
+```
+python src/main.py
 ```
