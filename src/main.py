@@ -1,42 +1,41 @@
 import string
 
-from models.game import Game
+from models.game import Game, GameState
 from models.letter import Letter
 
-game = Game()
-#print(game.getNumberOfLetters())
-#print(game.pickRandomWord())
 
-#letter1 = Letter("A")
-#letter2 = Letter("B")
-#print(letter1.state)
-
-#newWord = game.pickRandomWord()
-#print(newWord)
-
-#for l in newWord.letters:
-#    print(l)
-
-#print(game.returnLetterInstance("d"))
-#print(game.returnLetterInstance("e"))
-#print(game.returnLetterInstance("ff"))
-
-game.startNewGame()
-#game.guessTheWord("daddy")
-
-game.guessTheWord("caddy")
-
-game.printAllLettersState()
-
-#game.guessTheWord("cried")
-#game.printAllLettersState()
-
-#for i in range(5):
-#    print(i)
+def ask_word():
+    while True:
+        word = input("Enter a 5-letter word: ").strip().lower()
+        if len(word) == 5 and word.isalpha():
+            return word
+        print("Invalid word, try again.")
 
 
+if __name__ == "__main__":
+    game = Game()
+    game.startNewGame()
 
-#Tester les dictionnaires
-#d = { c:Letter(c) for c in string.ascii_lowercase}
-# for l in d:
-#     print(d[l]) 
+    while(game.gameState == GameState.InProgress):
+        while True:
+            guess = ask_word()
+            if game.isWordInWordList(guess):
+                break
+            else:
+                print("Word not in list. Try another word")
+            
+        game.guessTheWord(guess)
+        game.printAllLettersState()
+
+    if game.gameState == GameState.Won:
+        print("You won the game!")
+    else:
+        print("You lost the game!")
+    print(f"The word was {str(game.wordToGuess)}")
+    print(f"Number of guesses left : {str(game.numberOfGuessLeft)}")
+
+
+
+
+
+

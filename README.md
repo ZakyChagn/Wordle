@@ -1,5 +1,5 @@
-# Wordle
-Clone du jeu Wordle
+# Wordle in python
+Wordle game clone coded in python
 
 ### Setup
 1. In root project, create virtual environment 
@@ -24,6 +24,10 @@ Windows
 3. Install the dependencies
 ```
 pip install -r requirements.txt
+```
+### Execute unit tests
+```
+pytest
 ```
 
 ### Run the game

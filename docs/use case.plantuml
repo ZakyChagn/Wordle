@@ -3,15 +3,18 @@ left to right direction
 
 actor Player as p
 
-package Game {
-    usecase "Play" as UC5
-    usecase "Quit" as UC4
-}
+package Game{
+    
+    package Menu {
+        usecase "Play" as UC5
+        usecase "Quit" as UC4
+    }
 
-package InGame{
-    usecase "Select letter" as UC1
-    usecase "Try guess" as UC2
-    usecase "Restart game" as UC3
+    package InGame{
+        usecase "Select letter" as UC1
+        usecase "Try guess" as UC2
+        usecase "Restart game" as UC3
+    }
 }
 p --> UC1
 p --> UC2

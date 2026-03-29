@@ -164,3 +164,21 @@ def test_change_letter_state(setup):
     setup.changeLetterState(letterInstanceD, LetterState.Valid)
     setup.changeLetterState(letterInstanceD, LetterState.Invalid)
     assert letterInstanceD.state == LetterState.Valid
+
+
+def test_word_is_in_list(setup):
+    word_in_list1 = setup.isWordInWordList("gecko")
+    word_in_list2 = setup.isWordInWordList("agape")
+    word_in_list3 = setup.isWordInWordList("berry")
+    word_in_list4 = setup.isWordInWordList("dairy")
+    word_in_list5 = setup.isWordInWordList("focus")
+    word_in_list6 = setup.isWordInWordList("empty")
+
+    assert word_in_list1 == True
+    assert word_in_list2 == True
+    assert word_in_list3 == True
+    assert word_in_list4 == True
+    assert word_in_list5 == True
+    assert word_in_list6 == True
+
+

@@ -5,7 +5,15 @@ import json
 import random
 import string
 import os
+from enum import Enum
 
+
+MAX_TRIES = 6
+
+class GameState(Enum):
+    InProgress = 1
+    Won = 2
+    Lost = 3
 
 class Game():
     def __init__(self):
@@ -13,6 +21,8 @@ class Game():
         self.words = []
         self.letters = { c:Letter(c) for c in string.ascii_lowercase}
         self.wordToGuess = None
+        self.numberOfGuessLeft = MAX_TRIES
+        self.gameState = GameState.InProgress
 
         # Get the directory where the current script is located
         script_dir = os.path.dirname(__file__)
@@ -29,8 +39,10 @@ class Game():
         return Word(self.words[index])
     
     def startNewGame(self):
-        """Démarre une nouvelle partie. Reset l'état du jeu"""
+        """Start a new game. Reset the state of the game"""
         self.wordToGuess = self.pickRandomWord()
+        self.numberOfGuessLeft = MAX_TRIES
+        self.gameState = GameState.InProgress
         self.player.reset()
         for letter in self.letters:
             self.letters[letter].reset()
@@ -39,21 +51,21 @@ class Game():
         for l in self.letters:
             print(self.letters[l])
 
-    def guessTheWord(self, guess: str) -> bool:
-        #Prévention si mot n'est pas de longueur 5
-        if (len(guess) != 5):
-            return False
+    def guessTheWord(self, guess: str) -> list:
+        #Validate if the lenght of the word is equal to 5 and if there is a guess left
+        if (len(guess) != 5 and self.numberOfGuessLeft > 0):
+            return []
         
         #Première boucle pour trouver les Valid
         indexLeftGuess = [i for i in range(5)] #[0, 1, 2, 3, 4]
         indexLeftWord = [i for i in range(5)] #[0, 1, 2, 3, 4]
+        returnValues = []
         index = 0
         for i in guess:
             letterInstance = self.returnLetterInstance(i)
             if (self.wordToGuess.letters[index] == letterInstance.symbol):
                 self.changeLetterState(letterInstance, LetterState.Valid)
-                print("lettre guess : " + letterInstance.symbol)
-                print(letterInstance.state)
+                returnValues.append(letterInstance)
                 indexLeftGuess.remove(index)
                 indexLeftWord.remove(index)
             index += 1
@@ -82,9 +94,14 @@ class Game():
             else:
                 self.changeLetterState(letterInstance, LetterState.Invalid)
 
+            returnValues.append(letterInstance)
             
-            print(letterInstance.state)
+            
             index += 1
+
+        self.numberOfGuessLeft -= 1
+        self.checkGameState(returnValues)
+        return returnValues
 
     def returnLetterInstance(self, letter: str) -> Letter:
         return self.letters.get(letter)
@@ -99,7 +116,20 @@ class Game():
                 letterInstance.state = state  
         else:
             letterInstance.state = state
+    
+    def checkGameState(self, values: Letter):
+        numberOfValidLetters = 0
+        for l in values:
+            if l.state == LetterState.Valid:
+                numberOfValidLetters += 1
+                
+        if numberOfValidLetters == 5:
+            self.gameState = GameState.Won
+        elif self.numberOfGuessLeft <= 0:
+            self.gameState = GameState.Lost
+        else:
+            self.gameState = GameState.InProgress
         
-        
-        
+    def isWordInWordList(self, guess: str) -> bool:
+        return guess in self.words
     
