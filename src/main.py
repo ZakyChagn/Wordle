@@ -1,8 +1,4 @@
-import string
-
 from models.game import Game, GameState
-from models.letter import Letter
-
 
 def ask_word():
     while True:
@@ -14,7 +10,6 @@ def ask_word():
 def printAllLettersState(game):
         for l in game.letters:
             print(game.letters[l])
-
 
 if __name__ == "__main__":
     game = Game()

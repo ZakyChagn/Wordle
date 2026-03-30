@@ -1,5 +1,5 @@
 import pytest
-from models.game import Game
+from models.game import Game, GameState
 from models.letter import Letter, LetterState
 from models.word import Word
 
@@ -165,7 +165,6 @@ def test_change_letter_state(setup):
     setup.changeLetterState(letterInstanceD, LetterState.Invalid)
     assert letterInstanceD.state == LetterState.Valid
 
-
 def test_word_is_in_list(setup):
     word_in_list1 = setup.isWordInWordList("gecko")
     word_in_list2 = setup.isWordInWordList("agape")
@@ -181,4 +180,63 @@ def test_word_is_in_list(setup):
     assert word_in_list5 == True
     assert word_in_list6 == True
 
+    word_in_list1 = setup.isWordInWordList("asdas")
+    word_in_list2 = setup.isWordInWordList("salut")
+    word_in_list3 = setup.isWordInWordList("terro")
+    word_in_list4 = setup.isWordInWordList("laite")
+    word_in_list5 = setup.isWordInWordList("quoi")
+    word_in_list6 = setup.isWordInWordList("poils")
 
+    assert word_in_list1 == False
+    assert word_in_list2 == False
+    assert word_in_list3 == False
+    assert word_in_list4 == False
+    assert word_in_list5 == False
+    assert word_in_list6 == False
+
+def test_number_of_words(setup):
+    assert setup.getNumberOfWords() == 2309
+
+def test_check_game_state_won(setup):
+    setup.wordToGuess = Word("focus")
+    values = setup.guessTheWord("afoot") #guess #1
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("foamy") #guess #2
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("force") #guess #3
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("focus") #guess #4
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.Won
+
+def test_check_game_state_lost(setup):
+    setup.wordToGuess = Word("daddy")
+    values = setup.guessTheWord("afoot") #guess #1
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("dairy") #guess #2
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("dance") #guess #3
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("dandy") #guess #4
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("dally") #guess #5
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.InProgress
+
+    values = setup.guessTheWord("daunt") #guess #6
+    setup.checkGameState(values)
+    assert setup.gameState == GameState.Lost
