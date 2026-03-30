@@ -11,6 +11,10 @@ def ask_word():
             return word
         print("Invalid word, try again.")
 
+def printAllLettersState(game):
+        for l in game.letters:
+            print(game.letters[l])
+
 
 if __name__ == "__main__":
     game = Game()
@@ -25,7 +29,7 @@ if __name__ == "__main__":
                 print("Word not in list. Try another word")
             
         game.guessTheWord(guess)
-        game.printAllLettersState()
+        printAllLettersState(game)
 
     if game.gameState == GameState.Won:
         print("You won the game!")

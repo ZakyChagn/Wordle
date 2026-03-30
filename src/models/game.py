@@ -43,16 +43,12 @@ class Game():
         for letter in self.letters:
             self.letters[letter].reset()
 
-    def printAllLettersState(self):
-        for l in self.letters:
-            print(self.letters[l])
-
     def guessTheWord(self, guess: str) -> list:
         #Validate if the lenght of the word is equal to 5 and if there is a guess left
         if (len(guess) != 5 and self.numberOfGuessLeft > 0):
             return []
         
-        #Première boucle pour trouver les Valid
+        #First loop to find all valid letter
         indexLeftGuess = [i for i in range(5)] #[0, 1, 2, 3, 4]
         indexLeftWord = [i for i in range(5)] #[0, 1, 2, 3, 4]
         returnValues = []
@@ -66,7 +62,7 @@ class Game():
                 indexLeftWord.remove(index)
             index += 1
 
-        #Deuxième boucle pour trouver les WrongPlace et invalides
+        #Second loop to find remaining WrongPlace and invalid in the good order
         index = 0
         for l in range(5):
             if (l not in indexLeftGuess):
