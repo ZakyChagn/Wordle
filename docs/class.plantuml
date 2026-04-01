@@ -5,33 +5,29 @@ class Word{
 
 class Letter{
     string symbol
-    State state
 }
 
 class Game{
-    Player player
-    List<Word> wordList
     Word WordToGuess
-    Word[26] lettersList
+    Letter[26] lettersList
 }
 
-class Guess{
-    Word word
+enum GameState{
+    InProgress
+    Won
+    Lost
 }
 
-class Player{
-    Guess[6]
+enum LetterState{
+    Unknown
+    Valid
+    Invalid
+    Wrongplace
 }
-
 
 Word "1" o-- "5" Letter
-
-Player "1" *-- "6" Guess
-
-Game "1" o-- "1" Player
-Game "1" o-- "*" Word
-
-Guess "1" o-- "1" Word
-
+Game -> GameState
+Letter -> LetterState
+Game "1" o-- "1" Word
 
 @enduml
